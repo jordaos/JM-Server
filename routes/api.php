@@ -23,4 +23,4 @@ Route::get('/', function () {
 });
 
 Route::resource('contacts', 'ContactsController');
-//Route::resource('projects', 'ProjectsController');
+Route::resource('projects', 'ProjectsController');
