@@ -2,8 +2,8 @@
 <html>
 
 <head>
-	<link href="{{ asset('css/app.css') }}" rel="stylesheet">
-	<link href="{{ asset('css/styles.min.css') }}" rel="stylesheet">
+	<link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
+	<link href="{{ secure_asset('css/styles.min.css') }}" rel="stylesheet">
 </head>
 
 <body>
