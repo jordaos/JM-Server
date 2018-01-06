@@ -15,6 +15,11 @@ class ProjectsController extends Controller
         return view('project.create');
     }
 
+    public function getImages($id) {
+        $images = \App\Project::find($id)->images;
+        return response()->json($images);
+    }
+
     public function show($id) {
         $project = \App\Project::find($id);
 
