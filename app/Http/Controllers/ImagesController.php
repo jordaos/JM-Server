@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
-use Request;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 use App\Project;
@@ -39,14 +39,10 @@ class ImagesController extends Controller
         $entry->filename = $file->getFilename().'.'.$extension;
         $entry->pt_description = $request->pt_description;
         $entry->en_description = $request->en_description;
-        
         $entry->project()->associate($request->project_id);
-
-        //print_r($request->project_id);
- 
 		$entry->save();
  
-		return (new Response('', 201));
+		return response()->json($entry, 201);
     }
 
     /**
@@ -57,11 +53,6 @@ class ImagesController extends Controller
      */
     public function show($id)
     {
-        /*$entry = Image::where('filename', '=', $filename)->firstOrFail();
-		$file = Storage::disk('local')->get($entry->filename);
- 
-		return (new Response($file, 200))
-              ->header('Content-Type', $entry->mime);*/
         $image = Image::find($id);
 
         if(!$image) {
@@ -70,7 +61,7 @@ class ImagesController extends Controller
             ], 404);
         }
 
-        $image->fileUrl = Request::root() . "/images/" . $image->filename;
+        $image->fileUrl = \Illuminate\Support\Facades\Request::root() . "/images/" . $image->filename;
 
         return response()->json($image);
     }

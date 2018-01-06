@@ -11,6 +11,10 @@ class ProjectsController extends Controller
         return response()->json($projects);
     }
 
+    public function createView() {
+        return view('project.create');
+    }
+
     public function show($id) {
         $project = \App\Project::find($id);
 
