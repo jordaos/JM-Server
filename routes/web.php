@@ -14,3 +14,6 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/images', 'ImagesController@indexView');
+Route::get('/images/{filename}', 'ImagesController@showImage');

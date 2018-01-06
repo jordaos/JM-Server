@@ -7,16 +7,19 @@ use Illuminate\Support\Facades\File;
 use Request;
 use Illuminate\Http\Response;
 
-use App\Fileentry;
 use App\Project;
 use App\Image;
 
-class PhotoController extends Controller
+class ImagesController extends Controller
 {
 
     public function index() {
+        return (new Response('', 404));
+    }
+
+    public function indexView() {
         $projects = Project::all();
-        return view('photo.create')->withProjects($projects);
+        return view('image.create')->withProjects($projects);
     }
     
     /**
@@ -73,6 +76,21 @@ class PhotoController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showImage($filename)
+    {
+        $entry = Image::where('filename', '=', $filename)->firstOrFail();
+		$file = Storage::disk('local')->get($entry->filename);
+ 
+		return (new Response($file, 200))
+              ->header('Content-Type', $entry->mime);
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
@@ -80,7 +98,7 @@ class PhotoController extends Controller
      */
     public function destroy($filename)
     {
-        $entry = Fileentry::where('filename', '=', $filename)->firstOrFail();
+        $entry = Image::where('filename', '=', $filename)->firstOrFail();
         $file = Storage::disk('local')->delete($entry->filename);
         $entry->delete();
  
