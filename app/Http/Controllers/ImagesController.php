@@ -32,7 +32,7 @@ class ImagesController extends Controller
     {
         $file = $request->file('filefield');
 		$extension = $file->getClientOriginalExtension();
-		Storage::disk('local')->put($file->getFilename().'.'.$extension,  File::get($file));
+		//Storage::disk('local')->put($file->getFilename().'.'.$extension,  File::get($file));
 		$entry = new Image();
 		$entry->mime = $file->getClientMimeType();
 		$entry->original_filename = $file->getClientOriginalName();
@@ -40,7 +40,11 @@ class ImagesController extends Controller
         $entry->pt_description = $request->pt_description;
         $entry->en_description = $request->en_description;
         $entry->project()->associate($request->project_id);
-		$entry->save();
+        $entry->save();
+        
+        $s3 = \Storage::disk('s3');
+        $filePath = '/projects/' . $entry->filename;
+        $s3->put($filePath, File::get($file), 'public');
  
 		return response()->json($entry, 201);
     }
