@@ -70,31 +70,23 @@ class ImagesController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function showImage($filename)
-    {
-        $entry = Image::where('filename', '=', $filename)->firstOrFail();
-		$file = Storage::disk('local')->get($entry->filename);
- 
-		return (new Response($file, 200))
-              ->header('Content-Type', $entry->mime);
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($filename)
+    public function destroy($id)
     {
-        $entry = Image::where('filename', '=', $filename)->firstOrFail();
-        $file = Storage::disk('local')->delete($entry->filename);
-        $entry->delete();
+        $image = Image::find($id);
+
+        if(!$image) {
+            return response()->json([
+                'message'   => 'Record not found',
+            ], 404);
+        }
+
+        $file = Storage::disk('s3')->delete('projects/' . $image->filename);
+        $image->delete();
  
 		return (new Response('', 204));
     }

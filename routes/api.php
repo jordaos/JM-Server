@@ -22,9 +22,7 @@ Route::get('/', function () {
     return response()->json(['message' => 'JM API', 'status' => 'Connected']);;
 });
 
-Route::get('projects/{id}/images', 'ProjectsController@getImages');
 Route::resource('projects', 'ProjectsController');
-
 Route::resource('contacts', 'ContactsController');
 Route::resource('images', 'ImagesController');
 Route::resource('skills', 'SkillsController');
