@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Image extends Model
 {
-    protected $fillable = ['pt_description', 'en_description', 'mime', 'original_filename', 'filename', 'project_id'];
+    protected $fillable = ['pt_description', 'en_description', 'mime', 'original_filename', 'filename', 'project_id', 'url'];
 
     public function project()
     {

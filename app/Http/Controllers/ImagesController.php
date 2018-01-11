@@ -40,6 +40,7 @@ class ImagesController extends Controller
         $entry->pt_description = $request->pt_description;
         $entry->en_description = $request->en_description;
         $entry->project()->associate($request->project_id);
+        $entry->url = "https://s3.sa-east-1.amazonaws.com/jm-portfolio/projects/" . $entry->filename;
         $entry->save();
         
         $s3 = \Storage::disk('s3');
@@ -64,8 +65,6 @@ class ImagesController extends Controller
                 'message'   => 'Record not found',
             ], 404);
         }
-
-        $image->fileUrl = \Illuminate\Support\Facades\Request::root() . "/images/" . $image->filename;
 
         return response()->json($image);
     }

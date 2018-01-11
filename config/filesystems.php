@@ -57,10 +57,10 @@ return [
 
         's3' => [
             'driver' => 's3',
-            'key' => env('S3_KEY'),
-            'secret' => env('S3_SECRET'),
-            'region' => env('S3_REGION'),
-            'bucket' => env('S3_BUCKET'),
+            'key' => env('S3_KEY', 'AKIAIWIO4OXNDQUBXVQA'),
+            'secret' => env('S3_SECRET', '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'),
+            'region' => env('S3_REGION', 'sa-east-1'),
+            'bucket' => env('S3_BUCKET', 'jm-portfolio'),
         ],
 
     ],
